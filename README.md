@@ -1,5 +1,7 @@
 # Jwan's Library
 
+**→ [Open the interactive library](https://drmahmoodhachim-gif.github.io/jwan-library/) ←**
+
 A personal interactive library web app for organizing books, papers, notes, and resources. Built for GitHub Pages.
 
 ## Features
