@@ -56,8 +56,7 @@ async function searchBooks(query) {
   elements.bookSearchResults.innerHTML = '<div class="search-loading">Searching books...</div>';
   elements.bookSearchResults.classList.add('visible');
   try {
-    const apiUrl = `${OPEN_LIBRARY_API}?q=${q}&limit=20`;
-    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(apiUrl));
+    const res = await fetch(`${OPEN_LIBRARY_API}?q=${q}&limit=20`);
     const data = await res.json();
     bookSearchResults = (data.docs || []).slice(0, 12);
     renderBookSearchResults();
@@ -345,4 +344,4 @@ elements.clearSearch.addEventListener('click', () => {
 });
 
 // Init
-renderCards();
+switchView('library');
