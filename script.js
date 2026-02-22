@@ -54,9 +54,16 @@ async function searchBooks(query) {
   elements.bookSearchResults.classList.add('visible');
   try {
     const apiUrl = `${OPEN_LIBRARY_API}?q=${q}&limit=20`;
-    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(apiUrl));
-    const data = await res.json();
-    bookSearchResults = (data.docs || []).slice(0, 12);
+    let data;
+    try {
+      const r = await fetch('https://api.cors.lol/?' + encodeURIComponent(apiUrl));
+      data = r.ok ? await r.json() : null;
+    } catch (_) {}
+    if (!data) {
+      const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(apiUrl));
+      data = await r.json();
+    }
+    bookSearchResults = (data?.docs || []).slice(0, 12);
     renderBookSearchResults();
   } catch (err) {
     console.error('Book search error:', err);
@@ -194,13 +201,11 @@ function openModal(editId = null, bookData = null) {
   if (notesLabel) notesLabel.textContent = 'Summary / Notes';
   if (notesField) notesField.placeholder = 'Your thoughts, summary, key takeaways...';
 
-  const coverEl = document.getElementById('cover-i');
   if (editId) {
     const item = items.find(i => i.id === editId);
     if (item) {
       elements.modalTitle.textContent = 'Edit Item';
       elements.itemId.value = item.id;
-      if (coverEl) coverEl.value = item.cover_i ? String(item.cover_i) : '';
       document.getElementById('title').value = item.title;
       document.getElementById('author').value = item.author || '';
       document.getElementById('category').value = item.category;
@@ -211,7 +216,6 @@ function openModal(editId = null, bookData = null) {
   } else if (bookData) {
     elements.modalTitle.textContent = 'Add to Library';
     elements.itemId.value = '';
-    if (coverEl) coverEl.value = bookData.cover_i != null ? String(bookData.cover_i) : '';
     document.getElementById('title').value = bookData.title || '';
     document.getElementById('author').value = bookData.author || '';
     document.getElementById('category').value = 'books';
@@ -223,7 +227,6 @@ function openModal(editId = null, bookData = null) {
     elements.modalTitle.textContent = 'Add Item';
     elements.itemForm.reset();
     elements.itemId.value = '';
-    if (coverEl) coverEl.value = '';
   }
 }
 
