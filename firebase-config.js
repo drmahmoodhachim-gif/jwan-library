@@ -1,12 +1,10 @@
 // Firebase config for jwan-library (same project as jwan-books: realtime-fe14f)
-// Get values from Firebase Console > Project Settings > Your apps
-// Leave apiKey empty to disable Firebase sync (library will use localStorage only)
 window.JWAN_FIREBASE_CONFIG = {
-  apiKey: '',
+  apiKey: 'AIzaSyC3ud-JEAnnvrbYCNYJikTzRse_Agt7sQk',
   authDomain: 'realtime-fe14f.firebaseapp.com',
   databaseURL: 'https://realtime-fe14f-default-rtdb.firebaseio.com',
   projectId: 'realtime-fe14f',
-  storageBucket: 'realtime-fe14f.appspot.com',
-  messagingSenderId: '',
-  appId: '',
+  storageBucket: 'realtime-fe14f.firebasestorage.app',
+  messagingSenderId: '643773236111',
+  appId: '1:643773236111:web:e8cca246a19c7bd97a01fa',
 };
