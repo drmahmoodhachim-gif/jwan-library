@@ -1,0 +1,335 @@
+/* Jwan's Book Nook - ASD-accessible design */
+/* Soft colors, clear typography, single column */
+
+:root {
+  --color-bg: #f5f5f0;
+  --color-paper: #ffffff;
+  --color-text: #2c3e50;
+  --color-text-soft: #4a5568;
+  --color-border: #c8d4c4;
+  --color-accent: #6b8e6b;
+  --color-star: #5a7a5a;
+  
+  --font-family: Arial, Helvetica, 'Helvetica Neue', sans-serif;
+  --font-size: 16pt;
+  --line-height: 1.6;
+  
+  --space: 1.5rem;
+  --max-width: 42rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  color: var(--color-text);
+  background: var(--color-bg);
+  text-align: left;
+  overflow-x: hidden;
+}
+
+/* Settings bar - at top */
+.settings-bar {
+  background: var(--color-paper);
+  border-bottom: 2px solid var(--color-border);
+  padding: 0.75rem var(--space);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.settings-label {
+  font-size: var(--font-size);
+  color: var(--color-text);
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.settings-item span {
+  font-size: var(--font-size);
+}
+
+.settings-item button {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-paper);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.settings-item button:hover {
+  background: #e8ebe8;
+}
+
+.settings-item button.active {
+  background: var(--color-accent);
+  color: var(--color-paper);
+  border-color: var(--color-accent);
+}
+
+/* Main page - single column */
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space);
+  padding-bottom: 3rem;
+}
+
+/* Header */
+.header {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  padding: var(--space);
+  margin-bottom: var(--space);
+}
+
+.header-graphic {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.book-icon {
+  font-size: 1.5rem;
+}
+
+.header-title {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: center;
+  text-transform: none;
+}
+
+/* Section titles */
+.section-title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-family);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-transform: none;
+}
+
+/* Profile box - image left, text right */
+.profile-box {
+  background: var(--color-paper);
+  border: 2px solid var(--color-border);
+  padding: var(--space);
+  margin-bottom: var(--space);
+}
+
+.profile-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.profile-avatar {
+  flex-shrink: 0;
+}
+
+.avatar-placeholder {
+  width: 5rem;
+  height: 5rem;
+  background: var(--color-accent);
+  color: var(--color-paper);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.profile-bio {
+  flex: 1;
+}
+
+.profile-bio p {
+  margin: 0 0 0.5rem;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  text-align: left;
+}
+
+.profile-bio p:last-child {
+  margin-bottom: 0;
+}
+
+/* Current read - cover left, text right */
+.current-read-box {
+  background: var(--color-paper);
+  border: 2px solid var(--color-border);
+  padding: var(--space);
+  margin-bottom: var(--space);
+}
+
+.current-read-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.current-read-cover {
+  flex-shrink: 0;
+}
+
+.cover-placeholder {
+  width: 6rem;
+  height: 9rem;
+  background: #e8ebe8;
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+.current-read-text {
+  flex: 1;
+}
+
+.current-read-text h3 {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.current-author {
+  margin: 0 0 0.75rem;
+  font-size: var(--font-size);
+  color: var(--color-text-soft);
+}
+
+.current-read-text p {
+  margin: 0 0 0.5rem;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  text-align: left;
+}
+
+.current-read-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Navigation - where you are */
+.nav-bar {
+  background: #e8ebe8;
+  border: 1px solid var(--color-border);
+  padding: 0.5rem var(--space);
+  margin-bottom: var(--space);
+}
+
+.nav-you-are {
+  font-size: var(--font-size);
+  color: var(--color-text);
+}
+
+/* Review feed - vertical list */
+.review-feed {
+  margin-bottom: var(--space);
+}
+
+.review-card {
+  background: var(--color-paper);
+  border: 2px solid var(--color-border);
+  padding: var(--space);
+  margin-bottom: var(--space);
+}
+
+.review-card:last-child {
+  margin-bottom: 0;
+}
+
+.review-card-header {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.review-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.review-title {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.review-author {
+  margin: 0.25rem 0 0;
+  font-size: var(--font-size);
+  color: var(--color-text-soft);
+}
+
+/* Rating - solid stars */
+.review-rating {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.review-rating .star {
+  color: #d1d5db;
+}
+
+.review-rating .star.filled {
+  color: var(--color-star);
+}
+
+.review-text {
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.75rem;
+}
+
+.review-text p {
+  margin: 0 0 0.5rem;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  text-align: left;
+}
+
+.review-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* No hyphens, no justify */
+p, h1, h2, h3 {
+  hyphens: none;
+  text-align: left;
+}
+
+/* Responsive - stack image/text on small screens */
+@media (max-width: 480px) {
+  .profile-content,
+  .current-read-content {
+    flex-direction: column;
+  }
+}

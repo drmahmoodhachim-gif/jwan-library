@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jwan's Book Nook</title>
+  <link rel="stylesheet" href="book-nook.css">
+</head>
+<body>
+  <!-- Settings: Font size and line-spacing - simple buttons, no dropdowns -->
+  <div class="settings-bar" role="region" aria-label="Display settings">
+    <span class="settings-label">Display options:</span>
+    <div class="settings-item">
+      <span>Text size:</span>
+      <button type="button" id="font-small" aria-label="Smaller text">A</button>
+      <button type="button" id="font-medium" aria-label="Medium text">A</button>
+      <button type="button" id="font-large" aria-label="Larger text">A</button>
+    </div>
+    <div class="settings-item">
+      <span>Line spacing:</span>
+      <button type="button" id="space-normal" aria-label="Normal spacing">Normal</button>
+      <button type="button" id="space-relaxed" aria-label="More spacing">More</button>
+      <button type="button" id="space-extra" aria-label="Extra spacing">Extra</button>
+    </div>
+  </div>
+
+  <main class="page">
+    <!-- 1. Header / Welcome -->
+    <header class="header">
+      <div class="header-graphic" aria-hidden="true">
+        <span class="book-icon">📕</span>
+        <span class="book-icon">📗</span>
+        <span class="book-icon">📘</span>
+        <span class="book-icon">📙</span>
+        <span class="book-icon">📕</span>
+      </div>
+      <h1 class="header-title">Jwan's Book Nook</h1>
+    </header>
+
+    <!-- 2. Profile Section -->
+    <section class="profile-box" aria-labelledby="profile-heading">
+      <h2 id="profile-heading" class="section-title">About me</h2>
+      <div class="profile-content">
+        <div class="profile-avatar">
+          <div class="avatar-placeholder">J</div>
+        </div>
+        <div class="profile-bio">
+          <p>Hi, I am Jwan.</p>
+          <p>I love reading and reviewing books.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Current Read -->
+    <section class="current-read-box" aria-labelledby="current-heading">
+      <h2 id="current-heading" class="section-title">Current read</h2>
+      <div class="current-read-content">
+        <div class="current-read-cover">
+          <div class="cover-placeholder">📖</div>
+        </div>
+        <div class="current-read-text">
+          <h3>Title of the book</h3>
+          <p class="current-author">Author name</p>
+          <p>Short description of what this book is about.</p>
+          <p>One sentence per line.</p>
+          <p>Easy to read.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Navigation - where you are -->
+    <nav class="nav-bar" aria-label="Page navigation">
+      <span class="nav-you-are">You are here: Book Reviews</span>
+    </nav>
+
+    <!-- 5. Book Review Feed -->
+    <section class="review-feed" aria-labelledby="reviews-heading">
+      <h2 id="reviews-heading" class="section-title">My book reviews</h2>
+
+      <article class="review-card">
+        <div class="review-card-header">
+          <span class="review-icon" aria-hidden="true">🔍</span>
+          <div>
+            <h3 class="review-title">Book title here</h3>
+            <p class="review-author">Author name</p>
+          </div>
+        </div>
+        <div class="review-rating" aria-label="Rating: 4 out of 5 stars">
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star">★</span>
+        </div>
+        <div class="review-text">
+          <p>Short sentence about the book.</p>
+          <p>Another clear sentence.</p>
+          <p>My critique in simple words.</p>
+        </div>
+      </article>
+
+      <article class="review-card">
+        <div class="review-card-header">
+          <span class="review-icon" aria-hidden="true">📖</span>
+          <div>
+            <h3 class="review-title">Another book title</h3>
+            <p class="review-author">Author name</p>
+          </div>
+        </div>
+        <div class="review-rating" aria-label="Rating: 5 out of 5 stars">
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+          <span class="star filled">★</span>
+        </div>
+        <div class="review-text">
+          <p>I liked this book a lot.</p>
+          <p>The story was easy to follow.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="book-nook.js"></script>
+</body>
+</html>
