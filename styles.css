@@ -71,29 +71,10 @@ body {
   color: var(--text-muted);
 }
 
-.header-actions {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
 .search-bar {
   display: flex;
   gap: 0.5rem;
   max-width: 420px;
-  flex: 1;
-  min-width: 200px;
-}
-
-.btn-add-mobile {
-  display: none;
-}
-
-@media (max-width: 700px) {
-  .btn-add-mobile {
-    display: inline-flex;
-  }
 }
 
 .search-bar input {
@@ -215,6 +196,23 @@ body {
   grid-area: main;
   padding: 1.5rem 2rem;
   overflow-y: auto;
+}
+
+.main.show-search .library-grid,
+.main.show-search .empty-state {
+  display: none;
+}
+
+.main.show-library .book-search-results {
+  display: none;
+}
+
+.main.show-library .book-search-results.visible {
+  display: none;
+}
+
+.main.show-search .book-search-results.visible {
+  display: grid;
 }
 
 .stats {
