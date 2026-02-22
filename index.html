@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jwan's Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>Jwan's Library</h1>
+      <p class="tagline">Your personal collection</p>
+      <div class="header-actions">
+        <div class="search-bar">
+          <input type="text" id="search" placeholder="Search books, resources, notes..." autocomplete="off">
+          <button type="button" id="search-btn" aria-label="Search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </button>
+        </div>
+        <button class="btn-add btn-add-mobile" id="add-item-mobile">+ Add Item</button>
+      </div>
+    </header>
+
+    <nav class="sidebar">
+      <h3>Categories</h3>
+      <ul class="categories">
+        <li><button class="category-btn active" data-category="all">All</button></li>
+        <li><button class="category-btn" data-category="books">Books</button></li>
+        <li><button class="category-btn" data-category="papers">Papers</button></li>
+        <li><button class="category-btn" data-category="notes">Notes</button></li>
+        <li><button class="category-btn" data-category="resources">Resources</button></li>
+      </ul>
+      <div class="sidebar-actions">
+        <button class="btn-add" id="add-item">+ Add Item</button>
+        <button class="btn-clear" id="clear-search">Clear filters</button>
+      </div>
+    </nav>
+
+    <main class="main">
+      <div class="stats">
+        <span id="item-count">0 items</span>
+        <span class="status-filter" id="status-filter"></span>
+      </div>
+      <div class="library-grid" id="library"></div>
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">📚</div>
+        <p>Your library is empty</p>
+        <p class="empty-hint">Click "Add Item" to start building your collection</p>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">Add Item</h2>
+        <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <form id="item-form">
+        <input type="hidden" id="item-id">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" required placeholder="e.g. The Great Gatsby">
+        </div>
+        <div class="form-group">
+          <label for="author">Author / Source</label>
+          <input type="text" id="author" placeholder="e.g. F. Scott Fitzgerald">
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category">
+            <option value="books">Books</option>
+            <option value="papers">Papers</option>
+            <option value="notes">Notes</option>
+            <option value="resources">Resources</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="url">Link (optional)</label>
+          <input type="url" id="url" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label for="notes">Notes</label>
+          <textarea id="notes" rows="3" placeholder="Your thoughts, summary, key takeaways..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select id="status">
+            <option value="to-read">To read</option>
+            <option value="reading">Reading</option>
+            <option value="read">Read</option>
+            <option value="reference">Reference</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="form-cancel">Cancel</button>
+          <button type="submit" class="btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
