@@ -13,44 +13,49 @@
   <div class="app">
     <header class="header">
       <h1>Jwan's Library</h1>
-      <p class="tagline">Your personal collection · <a href="https://drmahmoodhachim-gif.github.io/jwan-books/">View Book Nook</a></p>
-      <div class="search-bar">
-        <input type="text" id="search" placeholder="Search books, resources, notes..." autocomplete="off">
-        <button type="button" id="search-btn" aria-label="Search">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.35-4.35"/>
-          </svg>
-        </button>
-      </div>
+      <p class="tagline">Search the internet for books · Add them to your collection. <a href="https://drmahmoodhachim-gif.github.io/jwan-books/">View Book Nook</a></p>
     </header>
 
-    <nav class="sidebar">
-      <h3>Categories</h3>
-      <ul class="categories">
-        <li><button class="category-btn active" data-category="all">All</button></li>
-        <li><button class="category-btn" data-category="books">Books</button></li>
-        <li><button class="category-btn" data-category="papers">Papers</button></li>
-        <li><button class="category-btn" data-category="notes">Notes</button></li>
-        <li><button class="category-btn" data-category="resources">Resources</button></li>
-      </ul>
-      <div class="sidebar-actions">
-        <button class="btn-add" id="add-item">+ Add Item</button>
-        <button class="btn-clear" id="clear-search">Clear filters</button>
-      </div>
-    </nav>
-
     <main class="main">
-      <div class="stats">
-        <span id="item-count">0 items</span>
-        <span class="status-filter" id="status-filter"></span>
-      </div>
-      <div class="library-grid" id="library"></div>
-      <div class="empty-state" id="empty-state">
-        <div class="empty-icon">📚</div>
-        <p>Your library is empty</p>
-        <p class="empty-hint">Click "Add Item" to start building your collection</p>
-      </div>
+      <section class="panel panel-internet">
+        <h2 class="panel-title">🌐 Internet Search</h2>
+        <p class="panel-desc">Search Open Library for millions of books. Click a book to add it with your summary.</p>
+        <div class="search-row">
+          <input type="text" id="internet-search" placeholder="e.g. Harry Potter, Great Gatsby..." autocomplete="off">
+          <button type="button" id="internet-search-btn">Search</button>
+        </div>
+        <div class="book-search-results" id="book-search-results"></div>
+      </section>
+
+      <section class="panel panel-library">
+        <h2 class="panel-title">📚 My Library</h2>
+        <p class="panel-desc">Your saved collection. Search and filter your items.</p>
+        <div class="library-toolbar">
+          <div class="search-row">
+            <input type="text" id="local-search" placeholder="Search your library..." autocomplete="off">
+          </div>
+          <div class="library-actions">
+            <div class="categories-inline">
+              <button class="category-btn active" data-category="all">All</button>
+              <button class="category-btn" data-category="books">Books</button>
+              <button class="category-btn" data-category="papers">Papers</button>
+              <button class="category-btn" data-category="notes">Notes</button>
+              <button class="category-btn" data-category="resources">Resources</button>
+            </div>
+            <button class="btn-add" id="add-item">+ Add Item</button>
+          </div>
+        </div>
+        <div class="stats">
+          <span id="item-count">0 items</span>
+          <span class="status-filter" id="status-filter"></span>
+        </div>
+        <div class="library-grid" id="library"></div>
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon">📚</div>
+          <p>Your library is empty</p>
+          <p class="empty-hint">Search the internet above to add books, or click "Add Item" for papers, notes, resources.</p>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -84,7 +89,7 @@
           <input type="url" id="url" placeholder="https://...">
         </div>
         <div class="form-group">
-          <label for="notes">Notes</label>
+          <label for="notes" id="notes-label">Summary / Notes</label>
           <textarea id="notes" rows="3" placeholder="Your thoughts, summary, key takeaways..."></textarea>
         </div>
         <div class="form-group">
