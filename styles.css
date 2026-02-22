@@ -59,6 +59,29 @@ body {
   margin: 0 auto;
 }
 
+.book-search-results-wrapper {
+  margin-bottom: 1rem;
+}
+
+.sidebar-filter {
+  margin-bottom: 1rem;
+}
+
+.sidebar-filter label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-filter input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
 .panel {
   background: var(--bg-card);
   border: 1px solid var(--border);

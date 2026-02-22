@@ -194,11 +194,13 @@ function openModal(editId = null, bookData = null) {
   if (notesLabel) notesLabel.textContent = 'Summary / Notes';
   if (notesField) notesField.placeholder = 'Your thoughts, summary, key takeaways...';
 
+  const coverEl = document.getElementById('cover-i');
   if (editId) {
     const item = items.find(i => i.id === editId);
     if (item) {
       elements.modalTitle.textContent = 'Edit Item';
       elements.itemId.value = item.id;
+      if (coverEl) coverEl.value = item.cover_i ? String(item.cover_i) : '';
       document.getElementById('title').value = item.title;
       document.getElementById('author').value = item.author || '';
       document.getElementById('category').value = item.category;
@@ -209,6 +211,7 @@ function openModal(editId = null, bookData = null) {
   } else if (bookData) {
     elements.modalTitle.textContent = 'Add to Library';
     elements.itemId.value = '';
+    if (coverEl) coverEl.value = bookData.cover_i != null ? String(bookData.cover_i) : '';
     document.getElementById('title').value = bookData.title || '';
     document.getElementById('author').value = bookData.author || '';
     document.getElementById('category').value = 'books';
@@ -220,6 +223,7 @@ function openModal(editId = null, bookData = null) {
     elements.modalTitle.textContent = 'Add Item';
     elements.itemForm.reset();
     elements.itemId.value = '';
+    if (coverEl) coverEl.value = '';
   }
 }
 
@@ -287,6 +291,3 @@ document.querySelectorAll('.category-btn').forEach(btn => {
 
 // Init
 renderCards();
-if (useFirebase && items.some(i => i.category === 'books')) {
-  syncBooksToFirebase();
-}
