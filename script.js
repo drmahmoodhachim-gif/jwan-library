@@ -1,26 +1,22 @@
-// Jwan's Library - Interactive Library App
-// Data persists in localStorage
-// Book search via Open Library API (free, no key)
+// Jwan's Library - Internet search + Local collection
+// Book search via Open Library API (CORS proxy)
 
 const STORAGE_KEY = 'jwan-library-items';
 const OPEN_LIBRARY_API = 'https://openlibrary.org/search.json';
 
 let items = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 let currentCategory = 'all';
-let searchQuery = '';
-let currentView = 'library'; // 'library' | 'search'
+let localSearchQuery = '';
 let bookSearchResults = [];
-let searchTimeout = null;
 
 const elements = {
   library: document.getElementById('library'),
   emptyState: document.getElementById('empty-state'),
-  bookSearchResults: document.getElementById('book-search-results') || document.createElement('div'),
-  search: document.getElementById('search'),
-  searchBtn: document.getElementById('search-btn'),
-  searchHint: document.getElementById('search-hint'),
+  bookSearchResults: document.getElementById('book-search-results'),
+  internetSearch: document.getElementById('internet-search'),
+  internetSearchBtn: document.getElementById('internet-search-btn'),
+  localSearch: document.getElementById('local-search'),
   addItem: document.getElementById('add-item'),
-  clearSearch: document.getElementById('clear-search'),
   modal: document.getElementById('modal'),
   modalClose: document.getElementById('modal-close'),
   modalTitle: document.getElementById('modal-title'),
@@ -49,23 +45,27 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-// ----------- Open Library API Search -----------
+// ----------- Internet Search (Open Library) -----------
 async function searchBooks(query) {
   if (!query.trim()) return;
   const q = encodeURIComponent(query.trim());
+  if (!elements.bookSearchResults) return;
   elements.bookSearchResults.innerHTML = '<div class="search-loading">Searching books...</div>';
   elements.bookSearchResults.classList.add('visible');
   try {
-    const res = await fetch(`${OPEN_LIBRARY_API}?q=${q}&limit=20`);
+    const apiUrl = `${OPEN_LIBRARY_API}?q=${q}&limit=20`;
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(apiUrl));
     const data = await res.json();
     bookSearchResults = (data.docs || []).slice(0, 12);
     renderBookSearchResults();
   } catch (err) {
-    elements.bookSearchResults.innerHTML = '<div class="search-empty">Could not reach book search. Please try again.</div>';
+    console.error('Book search error:', err);
+    elements.bookSearchResults.innerHTML = '<div class="search-empty">Could not reach book search. Try again.</div>';
   }
 }
 
 function renderBookSearchResults() {
+  if (!elements.bookSearchResults) return;
   if (bookSearchResults.length === 0) {
     elements.bookSearchResults.innerHTML = '<div class="search-empty">No books found. Try a different search.</div>';
     return;
@@ -111,17 +111,19 @@ function addBookFromSearch(book) {
   const author = book.author_name ? book.author_name.join(', ') : '';
   const key = book.key ? `https://openlibrary.org${book.key}` : null;
   openModal(null, { title, author, url: key });
-  document.getElementById('notes-label').textContent = 'Your summary (optional)';
-  document.getElementById('notes').placeholder = 'Write your summary of this book...';
+  const notesLabel = document.getElementById('notes-label');
+  const notesField = document.getElementById('notes');
+  if (notesLabel) notesLabel.textContent = 'Your summary (optional)';
+  if (notesField) notesField.placeholder = 'Write your summary of this book...';
 }
 
-// ----------- Library view -----------
+// ----------- Local Library -----------
 function filterItems() {
   return items.filter(item => {
     const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
-    const matchesSearch = !searchQuery ||
+    const matchesSearch = !localSearchQuery ||
       [item.title, item.author, item.notes].some(field =>
-        field && field.toLowerCase().includes(searchQuery.toLowerCase())
+        field && field.toLowerCase().includes(localSearchQuery.toLowerCase())
       );
     return matchesCategory && matchesSearch;
   });
@@ -129,12 +131,10 @@ function filterItems() {
 
 function renderCards() {
   const filtered = filterItems();
-
   elements.itemCount.textContent = `${filtered.length} item${filtered.length !== 1 ? 's' : ''}`;
-
-  if (searchQuery || currentCategory !== 'all') {
-    elements.statusFilter.textContent = searchQuery
-      ? `"${searchQuery}"`
+  if (localSearchQuery || currentCategory !== 'all') {
+    elements.statusFilter.textContent = localSearchQuery
+      ? `"${localSearchQuery}"`
       : `Category: ${currentCategory}`;
   } else {
     elements.statusFilter.textContent = '';
@@ -145,7 +145,7 @@ function renderCards() {
     elements.emptyState.classList.add('visible');
     elements.emptyState.querySelector('.empty-hint').textContent =
       items.length === 0
-        ? 'Search books above or click "Add Item" to start'
+        ? 'Search the internet above to add books, or click "Add Item" for papers, notes, resources.'
         : 'No items match your search or filter';
   } else {
     elements.emptyState.classList.remove('visible');
@@ -161,7 +161,7 @@ function renderCards() {
         <div class="card-meta">
           <span class="badge badge-${item.category}">${item.category}</span>
           <span class="badge badge-status">${item.status.replace('-', ' ')}</span>
-          ${item.url ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="card-link">🔗</a>` : ''}
+          ${item.url ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">🔗</a>` : ''}
         </div>
       </article>
     `).join('');
@@ -189,8 +189,10 @@ function renderCards() {
 
 function openModal(editId = null, bookData = null) {
   elements.modal.classList.add('open');
-  document.getElementById('notes-label').textContent = 'Summary / Notes';
-  document.getElementById('notes').placeholder = 'Your thoughts, summary, key takeaways...';
+  const notesLabel = document.getElementById('notes-label');
+  const notesField = document.getElementById('notes');
+  if (notesLabel) notesLabel.textContent = 'Summary / Notes';
+  if (notesField) notesField.placeholder = 'Your thoughts, summary, key takeaways...';
 
   if (editId) {
     const item = items.find(i => i.id === editId);
@@ -225,36 +227,11 @@ function closeModal() {
   elements.modal.classList.remove('open');
 }
 
-function switchView(view) {
-  currentView = view;
-  document.querySelectorAll('.view-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.view === view);
-  });
-  elements.library.closest('.main').classList.toggle('show-library', view === 'library');
-  elements.library.closest('.main').classList.toggle('show-search', view === 'search');
-  if (view === 'library') {
-    elements.bookSearchResults.classList.remove('visible');
-    elements.search.placeholder = 'Search your library...';
-    elements.searchHint.textContent = '';
-    renderCards();
-  } else {
-    elements.search.placeholder = 'Search Open Library for books...';
-    elements.searchHint.textContent = 'Searches millions of books. Click a book to add it with your summary.';
-    elements.search.value = '';
-    searchQuery = '';
-    bookSearchResults = [];
-    elements.bookSearchResults.classList.remove('visible');
-    renderCards();
-  }
-}
-
 // ----------- Event listeners -----------
 elements.addItem.addEventListener('click', () => openModal());
-document.getElementById('add-item-mobile')?.addEventListener('click', () => openModal());
 
 elements.modalClose.addEventListener('click', closeModal);
-elements.formCancel.addEventListener('click', closeModal);
-
+elements.formCancel?.addEventListener('click', closeModal);
 elements.modal.addEventListener('click', e => {
   if (e.target === elements.modal) closeModal();
 });
@@ -271,7 +248,6 @@ elements.itemForm.addEventListener('submit', e => {
     notes: document.getElementById('notes').value.trim() || null,
     status: document.getElementById('status').value,
   };
-
   const idx = items.findIndex(i => i.id === id);
   if (idx >= 0) {
     items[idx] = item;
@@ -283,64 +259,30 @@ elements.itemForm.addEventListener('submit', e => {
   save();
   renderCards();
   closeModal();
-  if (currentView === 'search') {
-    elements.bookSearchResults.classList.remove('visible');
-  }
 });
 
-document.querySelectorAll('.view-btn').forEach(btn => {
-  btn.addEventListener('click', () => switchView(btn.dataset.view));
+// Internet search
+elements.internetSearchBtn.addEventListener('click', () => {
+  searchBooks(elements.internetSearch.value.trim());
+});
+elements.internetSearch.addEventListener('keydown', e => {
+  if (e.key === 'Enter') searchBooks(elements.internetSearch.value.trim());
 });
 
+// Local search (filter library)
+elements.localSearch.addEventListener('input', () => {
+  localSearchQuery = elements.localSearch.value.trim();
+  renderCards();
+});
+
+// Categories
 document.querySelectorAll('.category-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelector('.category-btn.active')?.classList.remove('active');
+    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentCategory = btn.dataset.category;
     renderCards();
   });
-});
-
-elements.search.addEventListener('input', () => {
-  searchQuery = elements.search.value.trim();
-  if (currentView === 'library') {
-    renderCards();
-  } else {
-    clearTimeout(searchTimeout);
-    if (searchQuery.length >= 2) {
-      searchTimeout = setTimeout(() => searchBooks(searchQuery), 400);
-    } else {
-      elements.bookSearchResults.classList.remove('visible');
-    }
-  }
-});
-
-elements.search.addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
-    if (currentView === 'search' && searchQuery) {
-      searchBooks(searchQuery);
-    }
-  }
-});
-
-elements.searchBtn.addEventListener('click', () => {
-  if (currentView === 'search') {
-    searchBooks(elements.search.value.trim());
-  } else {
-    renderCards();
-  }
-});
-
-elements.clearSearch.addEventListener('click', () => {
-  elements.search.value = '';
-  searchQuery = '';
-  document.querySelector('.category-btn.active')?.classList.remove('active');
-  document.querySelector('[data-category="all"]')?.classList.add('active');
-  currentCategory = 'all';
-  if (currentView === 'search') {
-    elements.bookSearchResults.classList.remove('visible');
-  }
-  renderCards();
 });
 
 // Init
