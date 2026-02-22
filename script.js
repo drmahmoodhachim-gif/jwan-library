@@ -56,7 +56,8 @@ async function searchBooks(query) {
   elements.bookSearchResults.innerHTML = '<div class="search-loading">Searching books...</div>';
   elements.bookSearchResults.classList.add('visible');
   try {
-    const res = await fetch(`${OPEN_LIBRARY_API}?q=${q}&limit=20`);
+    const apiUrl = `${OPEN_LIBRARY_API}?q=${q}&limit=20`;
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(apiUrl));
     const data = await res.json();
     bookSearchResults = (data.docs || []).slice(0, 12);
     renderBookSearchResults();
@@ -239,12 +240,11 @@ function switchView(view) {
     renderCards();
   } else {
     elements.search.placeholder = 'Search Open Library for books...';
-    elements.searchHint.textContent = 'Type a book name and press Enter or click search.';
+    elements.searchHint.textContent = 'Searches millions of books. Click a book to add it with your summary.';
     elements.search.value = '';
     searchQuery = '';
     bookSearchResults = [];
-    elements.bookSearchResults.innerHTML = '<div class="search-empty">Type a book title or author above, then press Enter to search.</div>';
-    elements.bookSearchResults.classList.add('visible');
+    elements.bookSearchResults.classList.remove('visible');
     renderCards();
   }
 }
