@@ -239,11 +239,12 @@ function switchView(view) {
     renderCards();
   } else {
     elements.search.placeholder = 'Search Open Library for books...';
-    elements.searchHint.textContent = 'Searches millions of books. Click a book to add it with your summary.';
+    elements.searchHint.textContent = 'Type a book name and press Enter or click search.';
     elements.search.value = '';
     searchQuery = '';
     bookSearchResults = [];
-    elements.bookSearchResults.classList.remove('visible');
+    elements.bookSearchResults.innerHTML = '<div class="search-empty">Type a book title or author above, then press Enter to search.</div>';
+    elements.bookSearchResults.classList.add('visible');
     renderCards();
   }
 }
@@ -344,4 +345,4 @@ elements.clearSearch.addEventListener('click', () => {
 });
 
 // Init
-switchView('library');
+renderCards();
