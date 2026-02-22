@@ -54,15 +54,16 @@ async function searchBooks(query) {
   elements.bookSearchResults.classList.add('visible');
   try {
     const apiUrl = `${OPEN_LIBRARY_API}?q=${q}&limit=20`;
-    const encoded = encodeURIComponent(apiUrl);
-    let res = await fetch('https://corsproxy.io/?' + encoded);
-    if (!res.ok) res = await fetch('https://api.cors.lol/?url=' + encoded);
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(apiUrl));
     const data = await res.json();
     bookSearchResults = (data.docs || []).slice(0, 12);
     renderBookSearchResults();
   } catch (err) {
     console.error('Book search error:', err);
-    elements.bookSearchResults.innerHTML = '<div class="search-empty">Could not reach book search. Try again.</div>';
+    if (elements.bookSearchResults) {
+      elements.bookSearchResults.innerHTML = '<div class="search-empty">Search failed. Please try again or check your connection.</div>';
+      elements.bookSearchResults.classList.add('visible');
+    }
   }
 }
 
