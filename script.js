@@ -56,7 +56,7 @@ async function searchBooks(query) {
     const apiUrl = `${OPEN_LIBRARY_API}?q=${q}&limit=20`;
     const encoded = encodeURIComponent(apiUrl);
     let res = await fetch('https://corsproxy.io/?' + encoded);
-    if (!res.ok) res = await fetch('https://api.cors.lol/' + encoded);
+    if (!res.ok) res = await fetch('https://api.cors.lol/?url=' + encoded);
     const data = await res.json();
     bookSearchResults = (data.docs || []).slice(0, 12);
     renderBookSearchResults();
