@@ -15,7 +15,7 @@ let searchTimeout = null;
 const elements = {
   library: document.getElementById('library'),
   emptyState: document.getElementById('empty-state'),
-  bookSearchResults: document.getElementById('book-search-results'),
+  bookSearchResults: document.getElementById('book-search-results') || document.createElement('div'),
   search: document.getElementById('search'),
   searchBtn: document.getElementById('search-btn'),
   searchHint: document.getElementById('search-hint'),
@@ -344,4 +344,4 @@ elements.clearSearch.addEventListener('click', () => {
 });
 
 // Init
-switchView('library');
+renderCards();
