@@ -52,25 +52,16 @@ async function searchBooks(query) {
   if (!elements.bookSearchResults) return;
   elements.bookSearchResults.innerHTML = '<div class="search-loading">Searching books...</div>';
   elements.bookSearchResults.classList.add('visible');
-  const apiUrl = `${OPEN_LIBRARY_API}?q=${q}&limit=20`;
-  let data;
   try {
-    const r = await fetch('https://api.cors.lol/?url=' + encodeURIComponent(apiUrl));
-    if (!r.ok) throw new Error(r.status);
-    data = await r.json();
-  } catch (e1) {
-    try {
-      const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(apiUrl));
-      if (!r.ok) throw new Error(r.status);
-      data = await r.json();
-    } catch (e2) {
-      console.error('Book search error:', e2);
-      elements.bookSearchResults.innerHTML = '<div class="search-empty">Could not reach book search. Try again later.</div>';
-      return;
-    }
+    const apiUrl = `${OPEN_LIBRARY_API}?q=${q}&limit=20`;
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent(apiUrl));
+    const data = await res.json();
+    bookSearchResults = (data.docs || []).slice(0, 12);
+    renderBookSearchResults();
+  } catch (err) {
+    console.error('Book search error:', err);
+    elements.bookSearchResults.innerHTML = '<div class="search-empty">Could not reach book search. Try again.</div>';
   }
-  bookSearchResults = (data.docs || []).slice(0, 12);
-  renderBookSearchResults();
 }
 
 function renderBookSearchResults() {
@@ -222,7 +213,7 @@ function openModal(editId = null, bookData = null) {
     document.getElementById('author').value = bookData.author || '';
     document.getElementById('category').value = 'books';
     document.getElementById('url').value = bookData.url || '';
-    document.getElementById('notes').value = '';
+    document.getElementById('notes').value = bookData.notes || '';
     document.getElementById('notes').focus();
     document.getElementById('status').value = 'to-read';
   } else {
