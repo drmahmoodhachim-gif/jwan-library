@@ -213,7 +213,7 @@ function openModal(editId = null, bookData = null) {
     document.getElementById('author').value = bookData.author || '';
     document.getElementById('category').value = 'books';
     document.getElementById('url').value = bookData.url || '';
-    document.getElementById('notes').value = bookData.notes || '';
+    document.getElementById('notes').value = '';
     document.getElementById('notes').focus();
     document.getElementById('status').value = 'to-read';
   } else {
@@ -287,3 +287,6 @@ document.querySelectorAll('.category-btn').forEach(btn => {
 
 // Init
 renderCards();
+if (useFirebase && items.some(i => i.category === 'books')) {
+  syncBooksToFirebase();
+}
