@@ -323,6 +323,17 @@ body {
   margin-bottom: 0;
 }
 
+/* Empty state note */
+.empty-note {
+  color: var(--color-text-soft);
+  font-size: var(--font-size);
+  font-style: italic;
+}
+
+.empty-note a {
+  color: var(--color-accent);
+}
+
 /* No hyphens, no justify */
 p, h1, h2, h3 {
   hyphens: none;

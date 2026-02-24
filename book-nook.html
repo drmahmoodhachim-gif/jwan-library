@@ -51,20 +51,11 @@
       </div>
     </section>
 
-    <!-- 3. Current Read -->
+    <!-- 3. Current Read (dynamically populated from library) -->
     <section class="current-read-box" aria-labelledby="current-heading">
       <h2 id="current-heading" class="section-title">Current read</h2>
-      <div class="current-read-content">
-        <div class="current-read-cover">
-          <div class="cover-placeholder">📖</div>
-        </div>
-        <div class="current-read-text">
-          <h3>Title of the book</h3>
-          <p class="current-author">Author name</p>
-          <p>Short description of what this book is about.</p>
-          <p>One sentence per line.</p>
-          <p>Easy to read.</p>
-        </div>
+      <div id="current-read-container">
+        <p class="empty-note">No books currently being read. Mark a book as "Reading" in <a href="index.html">Jwan's Library</a> to see it here.</p>
       </div>
     </section>
 
@@ -73,52 +64,12 @@
       <span class="nav-you-are">You are here: Book Reviews</span>
     </nav>
 
-    <!-- 5. Book Review Feed -->
+    <!-- 5. Book Review Feed (dynamically populated from library) -->
     <section class="review-feed" aria-labelledby="reviews-heading">
       <h2 id="reviews-heading" class="section-title">My book reviews</h2>
-
-      <article class="review-card">
-        <div class="review-card-header">
-          <span class="review-icon" aria-hidden="true">🔍</span>
-          <div>
-            <h3 class="review-title">Book title here</h3>
-            <p class="review-author">Author name</p>
-          </div>
-        </div>
-        <div class="review-rating" aria-label="Rating: 4 out of 5 stars">
-          <span class="star filled">★</span>
-          <span class="star filled">★</span>
-          <span class="star filled">★</span>
-          <span class="star filled">★</span>
-          <span class="star">★</span>
-        </div>
-        <div class="review-text">
-          <p>Short sentence about the book.</p>
-          <p>Another clear sentence.</p>
-          <p>My critique in simple words.</p>
-        </div>
-      </article>
-
-      <article class="review-card">
-        <div class="review-card-header">
-          <span class="review-icon" aria-hidden="true">📖</span>
-          <div>
-            <h3 class="review-title">Another book title</h3>
-            <p class="review-author">Author name</p>
-          </div>
-        </div>
-        <div class="review-rating" aria-label="Rating: 5 out of 5 stars">
-          <span class="star filled">★</span>
-          <span class="star filled">★</span>
-          <span class="star filled">★</span>
-          <span class="star filled">★</span>
-          <span class="star filled">★</span>
-        </div>
-        <div class="review-text">
-          <p>I liked this book a lot.</p>
-          <p>The story was easy to follow.</p>
-        </div>
-      </article>
+      <div id="reviews-container">
+        <p class="empty-note">No reviews yet. Mark books as "Read" and add notes and a rating in <a href="index.html">Jwan's Library</a> to see reviews here.</p>
+      </div>
     </section>
   </main>
 

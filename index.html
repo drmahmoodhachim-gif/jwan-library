@@ -96,6 +96,18 @@
             <option value="reference">Reference</option>
           </select>
         </div>
+        <div class="form-group">
+          <label>Rating (optional)</label>
+          <div class="star-rating-input" id="rating-input">
+            <button type="button" class="star-btn" data-value="1" aria-label="1 star">★</button>
+            <button type="button" class="star-btn" data-value="2" aria-label="2 stars">★</button>
+            <button type="button" class="star-btn" data-value="3" aria-label="3 stars">★</button>
+            <button type="button" class="star-btn" data-value="4" aria-label="4 stars">★</button>
+            <button type="button" class="star-btn" data-value="5" aria-label="5 stars">★</button>
+            <button type="button" class="star-clear" id="clear-rating">Clear</button>
+          </div>
+          <input type="hidden" id="rating" value="0">
+        </div>
         <div class="form-actions">
           <button type="button" class="btn-secondary" id="form-cancel">Cancel</button>
           <button type="submit" class="btn-primary">Save</button>

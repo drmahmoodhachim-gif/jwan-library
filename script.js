@@ -45,6 +45,33 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+function renderStars(rating) {
+  let html = '';
+  for (let i = 1; i <= 5; i++) {
+    html += `<span class="star${i <= rating ? ' filled' : ''}">★</span>`;
+  }
+  return html;
+}
+
+function setRatingInput(value) {
+  document.getElementById('rating').value = value;
+  document.querySelectorAll('.star-btn').forEach(btn => {
+    const v = parseInt(btn.dataset.value);
+    btn.classList.toggle('active', v <= value);
+  });
+}
+
+document.getElementById('rating-input').addEventListener('click', e => {
+  const btn = e.target.closest('.star-btn');
+  if (btn) {
+    setRatingInput(parseInt(btn.dataset.value));
+  }
+});
+
+document.getElementById('clear-rating').addEventListener('click', () => {
+  setRatingInput(0);
+});
+
 // ----------- Internet Search (Open Library) -----------
 async function searchBooks(query) {
   if (!query.trim()) return;
@@ -164,6 +191,7 @@ function renderCards() {
         </div>
         <h3 class="card-title">${escapeHtml(item.title)}</h3>
         ${item.author ? `<p class="card-author">${escapeHtml(item.author)}</p>` : ''}
+        ${item.rating ? `<div class="card-rating">${renderStars(item.rating)}</div>` : ''}
         ${item.notes ? `<p class="card-notes">${escapeHtml(item.notes)}</p>` : ''}
         <div class="card-meta">
           <span class="badge badge-${item.category}">${item.category}</span>
@@ -212,6 +240,7 @@ function openModal(editId = null, bookData = null) {
       document.getElementById('url').value = item.url || '';
       document.getElementById('notes').value = item.notes || '';
       document.getElementById('status').value = item.status || 'to-read';
+      setRatingInput(item.rating || 0);
     }
   } else if (bookData) {
     elements.modalTitle.textContent = 'Add to Library';
@@ -223,10 +252,12 @@ function openModal(editId = null, bookData = null) {
     document.getElementById('notes').value = '';
     document.getElementById('notes').focus();
     document.getElementById('status').value = 'to-read';
+    setRatingInput(0);
   } else {
     elements.modalTitle.textContent = 'Add Item';
     elements.itemForm.reset();
     elements.itemId.value = '';
+    setRatingInput(0);
   }
 }
 
@@ -254,6 +285,7 @@ elements.itemForm.addEventListener('submit', e => {
     url: document.getElementById('url').value.trim() || null,
     notes: document.getElementById('notes').value.trim() || null,
     status: document.getElementById('status').value,
+    rating: parseInt(document.getElementById('rating').value) || 0,
   };
   const idx = items.findIndex(i => i.id === id);
   if (idx >= 0) {

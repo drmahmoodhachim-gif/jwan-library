@@ -585,6 +585,62 @@ body {
   background: var(--border);
 }
 
+/* Star rating input */
+.star-rating-input {
+  display: flex;
+  gap: 0.15rem;
+  align-items: center;
+}
+
+.star-rating-input .star-btn {
+  width: auto;
+  height: auto;
+  padding: 0.1rem 0.15rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--border);
+  cursor: pointer;
+  transition: color 0.15s;
+  line-height: 1;
+}
+
+.star-rating-input .star-btn:hover,
+.star-rating-input .star-btn.active {
+  color: var(--accent);
+}
+
+.star-rating-input .star-clear {
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.star-rating-input .star-clear:hover {
+  background: var(--border);
+}
+
+/* Star rating display on cards */
+.card-rating {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+.card-rating .star {
+  color: var(--border);
+}
+
+.card-rating .star.filled {
+  color: var(--accent);
+}
+
 /* Toast */
 .toast {
   position: fixed;
