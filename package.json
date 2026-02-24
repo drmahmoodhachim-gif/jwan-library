@@ -1,0 +1,23 @@
+{
+  "name": "jwan-library",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A personal interactive library web app for organizing books, papers, notes, and resources.",
+  "scripts": {
+    "dev": "serve . -l 3000",
+    "lint": "eslint .",
+    "lint:html": "html-validate *.html",
+    "validate": "npm run lint && npm run lint:html"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.2",
+    "html-validate": "^10.9.0",
+    "serve": "^14.2.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drmahmoodhachim-gif/jwan-library.git"
+  },
+  "license": "ISC"
+}
